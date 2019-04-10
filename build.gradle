@@ -22,10 +22,10 @@ compileJava {
 
 minecraft {
     runDir = "run"
-	mappings = "${mappings_version}"
+    mappings = "${mappings_version}"
     version = "${mcversion}-${forge_version}"
-	replaceIn "${mod_info_path}"
-	replace "%VERSION%", "${version}"
+    replaceIn "${mod_info_path}"
+    replace "%VERSION%", "${version}"
 }
 
 version = "${mcversion}-${mod_version}-${release_version}"
