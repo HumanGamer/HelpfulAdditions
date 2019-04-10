@@ -1,11 +1,16 @@
 package com.humangamer.helpfuladditions.tiles;
 
 import com.humangamer.helpfuladditions.entities.EntityFakePlayer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.WorldServer;
+
+import javax.annotation.Nullable;
 
 public class TileFakePlayer extends TileEntity implements ITickable
 {
@@ -16,6 +21,16 @@ public class TileFakePlayer extends TileEntity implements ITickable
 
     // TODO: Have an actual inventory and GUI instead of a copy of an item that you right click onto the block.
     private ItemStack storedItem;
+
+    private void updateState()
+    {
+        this.markDirty();
+        if (world != null)
+        {
+            IBlockState state = world.getBlockState(getPos());
+            world.notifyBlockUpdate(getPos(), state, state, 3);
+        }
+    }
 
     @Override
     public void update()
@@ -39,53 +54,89 @@ public class TileFakePlayer extends TileEntity implements ITickable
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
+        super.readFromNBT(compound);
 
         if (compound.hasKey("item"))
-        {
-            NBTTagCompound item = compound.getCompoundTag("item");
-            storedItem = new ItemStack(item);
-        } else
-        {
+            storedItem = new ItemStack(compound.getCompoundTag("item"));
+        else
             storedItem = null;
-        }
 
         if (compound.hasKey("pitch"))
             pitch = compound.getFloat("pitch");
         if (compound.hasKey("yaw"))
             yaw = compound.getFloat("yaw");
-
-        super.readFromNBT(compound);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
+        super.writeToNBT(compound);
 
         if (storedItem != null)
         {
             NBTTagCompound item = new NBTTagCompound();
-
             storedItem.writeToNBT(item);
             compound.setTag("item", item);
-        } else if (compound.hasKey("item"))
-        {
-            compound.removeTag("item");
         }
 
         compound.setFloat("pitch", pitch);
         compound.setFloat("yaw", yaw);
 
-        return super.writeToNBT(compound);
+        return compound;
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        NBTTagCompound compound = new NBTTagCompound();
+        writeToNBT(compound);
+        return new SPacketUpdateTileEntity(getPos(), 1, compound);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
+    {
+        this.readFromNBT(packet.getNbtCompound());
     }
 
     public void setStoredItem(ItemStack stack)
     {
         storedItem = stack;
+        this.updateState();
     }
 
     public ItemStack getStoredItem()
     {
         return storedItem;
+    }
+
+    public void setPitch(float pitch)
+    {
+        this.pitch = pitch;
+        this.updateState();
+    }
+
+    public float getPitch()
+    {
+        return pitch;
+    }
+
+    public void setYaw(float yaw)
+    {
+        this.yaw = yaw;
+        this.updateState();
+    }
+
+    public float getYaw()
+    {
+        return yaw;
     }
 
 }
