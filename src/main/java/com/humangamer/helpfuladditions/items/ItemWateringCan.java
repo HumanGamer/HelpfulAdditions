@@ -88,6 +88,9 @@ public class ItemWateringCan extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(isActive(stack) ? ChatFormatting.GREEN + "Active" + ChatFormatting.RESET : ChatFormatting.RED + "Inactive" + ChatFormatting.RESET);
+        int rangeDisplay = (range + 2);
+        tooltip.add("Range: " + rangeDisplay + "x" + rangeDisplay);
+        tooltip.add("Effectiveness: " + chance + "%");
     }
 
     private boolean isActive(ItemStack stack)
