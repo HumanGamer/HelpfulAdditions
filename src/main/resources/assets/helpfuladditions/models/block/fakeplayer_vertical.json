@@ -1,7 +1,0 @@
-{
-  "parent": "block/orientable_vertical",
-  "textures": {
-    "front": "helpfuladditions:blocks/fakeplayer_front",
-    "side": "helpfuladditions:blocks/fakeplayer_top"
-  }
-}
