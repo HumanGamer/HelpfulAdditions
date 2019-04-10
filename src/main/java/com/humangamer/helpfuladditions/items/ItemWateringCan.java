@@ -17,9 +17,11 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -111,9 +113,9 @@ public class ItemWateringCan extends Item {
         {
             for (int j = -range; j<= range; j++)
             {
-                double d0 = pos.add(i, 0, j).getX() + world.rand.nextFloat();
+                double d0 = pos.add(i, 0, j).getX() + itemRand.nextFloat();
                 double d1 = pos.add(i, 0, j).getY() + 1.0D;
-                double d2 = pos.add(i, 0, j).getZ() + world.rand.nextFloat();
+                double d2 = pos.add(i, 0, j).getZ() + itemRand.nextFloat();
 
                 IBlockState state = world.getBlockState(pos.add(i, 0, j));
                 if (state.getBlock() instanceof BlockFarmland || state.isFullBlock())
@@ -135,11 +137,18 @@ public class ItemWateringCan extends Item {
             {
                 for (int k = -range; k <= range; k++)
                 {
-                    Block target = world.getBlockState(pos.add(i, j, k)).getBlock();
+                    IBlockState state = world.getBlockState(pos.add(i, j, k));
+                    Block block = state.getBlock();
 
-                    if (target instanceof IGrowable || target == Blocks.MYCELIUM || target == Blocks.CACTUS || target == Blocks.REEDS || target == Blocks.CHORUS_FLOWER)
+                    if (block instanceof IGrowable || block == Blocks.MYCELIUM || block == Blocks.CACTUS || block == Blocks.REEDS || block == Blocks.CHORUS_FLOWER)
                     {
-                        world.scheduleBlockUpdate(pos.add(i, j, k), target, 0, 1);
+                        world.scheduleBlockUpdate(pos.add(i, j, k), block, 0, 1);
+                    } else if (block instanceof BlockFarmland)
+                    {
+                        // Moisturize the soil
+                        int moisture = state.getValue(BlockFarmland.MOISTURE);
+                        if (moisture < 7)
+                            world.setBlockState(pos.add(i, j, k), state.withProperty(BlockFarmland.MOISTURE, Integer.valueOf(7)), 2);
                     }
                 }
             }
