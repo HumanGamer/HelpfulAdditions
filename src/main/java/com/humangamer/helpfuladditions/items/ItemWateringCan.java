@@ -52,13 +52,10 @@ public class ItemWateringCan extends Item {
             return;
 
         EntityPlayer player = (EntityPlayer)entity;
-
-        RayTraceResult ray = rayTrace(world, player, false);
-        if (ray != null && ray.typeOfHit == RayTraceResult.Type.BLOCK)
-        {
-            this.spawnWaterParticles(world, ray.getBlockPos());
-            this.waterCrops(world, ray.getBlockPos());
-        }
+        EnumFacing facing = player.getHorizontalFacing();
+        BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ).add(facing.getXOffset(), facing.getYOffset(), facing.getZOffset());
+        this.spawnWaterParticles(world, pos);
+        this.waterCrops(world, pos);
     }
 
     @Override
