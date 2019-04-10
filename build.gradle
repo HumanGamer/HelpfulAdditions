@@ -30,6 +30,27 @@ minecraft {
 
 version = "${mcversion}-${mod_version}-${release_version}"
 
+repositories {
+    maven { // The repo from which to get waila
+        name "Mobius Repo"
+        // url "http://mobiusstrip.eu/maven"
+        url "http://tehnut.info/maven"
+    }
+
+    maven { // TheOneProbe
+        name 'tterrag maven'
+        url "http://maven.tterrag.com/"
+    }
+}
+
+dependencies {
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}:api"
+
+    deobfCompile("mcjty.theoneprobe:TheOneProbe-${the_one_probe_version}") {
+        transitive = false
+    }
+}
+
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
