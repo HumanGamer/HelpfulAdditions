@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "facing=down":  { "model": "helpfuladditions:fakeplayer_vertical", "x": 180 },
+    "facing=up":    { "model": "helpfuladditions:fakeplayer_vertical" },
+    "facing=north": { "model": "helpfuladditions:fakeplayer" },
+    "facing=south": { "model": "helpfuladditions:fakeplayer", "y": 180 },
+    "facing=west":  { "model": "helpfuladditions:fakeplayer", "y": 270 },
+    "facing=east":  { "model": "helpfuladditions:fakeplayer", "y": 90 },
+    "inventory":    { "model": "helpfuladditions:fakeplayer" }
+  }
+}

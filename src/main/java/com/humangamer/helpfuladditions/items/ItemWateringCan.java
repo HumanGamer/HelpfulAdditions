@@ -4,7 +4,9 @@ import com.humangamer.helpfuladditions.Reference;
 import com.humangamer.helpfuladditions.registry.HARegistry;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -112,6 +114,10 @@ public class ItemWateringCan extends Item {
                 double d0 = pos.add(i, 0, j).getX() + world.rand.nextFloat();
                 double d1 = pos.add(i, 0, j).getY() + 1.0D;
                 double d2 = pos.add(i, 0, j).getZ() + world.rand.nextFloat();
+
+                IBlockState state = world.getBlockState(pos.add(i, 0, j));
+                if (state.getBlock() instanceof BlockFarmland || state.isFullBlock())
+                    d1 += 1.0D;
 
                 world.spawnParticle(EnumParticleTypes.WATER_DROP, d0, d1, d2, 0.0D, 0.0D, 0.0D, new int[5]);
             }
