@@ -2,7 +2,7 @@
   "parent": "block/orientable",
   "textures": {
     "top": "helpfuladditions:blocks/fakeplayer_top",
-    "front": "helpfuladditions:blocks/fakeplayer_front_horizontal",
+    "front": "helpfuladditions:blocks/fakeplayer_front",
     "side": "helpfuladditions:blocks/fakeplayer_side"
   }
 }

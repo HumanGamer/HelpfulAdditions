@@ -14,9 +14,11 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.PositionImpl;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -84,6 +86,25 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         world.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+
+        if (world.isRemote)
+            return true;
+
+
+        // TODO: Replace this with a GUI
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TileFakePlayer)
+        {
+            TileFakePlayer tile = (TileFakePlayer)tileEntity;
+
+            tile.setStoredItem(player.getHeldItem(hand).copy());
+        }
+
+        return true;
     }
 
     public static IPosition getFacingPosition(IBlockSource coords)
