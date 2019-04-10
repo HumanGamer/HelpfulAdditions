@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "helpfuladditions:items/reinforced_watering_can"
+  }
+}
