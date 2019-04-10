@@ -1,0 +1,16 @@
+[
+{
+  "modid": "helpfuladditions",
+  "name": "Helpful Additions",
+  "description": "A mod that adds various small but helpful additions to the game.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["HumanGamer"],
+  "credits": "HumanGamer for making this mod.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
