@@ -3,7 +3,6 @@ package com.humangamer.helpfuladditions.tiles;
 import com.humangamer.helpfuladditions.entities.EntityFakePlayer;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -11,7 +10,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.WorldServer;
 
-public class TileFakePlayer extends TileEntity implements ITickable {
+public class TileFakePlayer extends TileEntity implements ITickable
+{
 
     private EntityFakePlayer player;
 
@@ -19,11 +19,13 @@ public class TileFakePlayer extends TileEntity implements ITickable {
     private ItemStack storedItem;
 
     @Override
-    public void update() {
+    public void update()
+    {
         if (world.isRemote)
             return;
 
-        if (player == null) {
+        if (player == null)
+        {
             player = new EntityFakePlayer((WorldServer) world);
             player.setPosition(pos.getX(), pos.getY(), pos.getZ());
         }
@@ -45,12 +47,15 @@ public class TileFakePlayer extends TileEntity implements ITickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(NBTTagCompound compound)
+    {
 
-        if (compound.hasKey("item")) {
+        if (compound.hasKey("item"))
+        {
             NBTTagCompound item = compound.getCompoundTag("item");
             storedItem = new ItemStack(item);
-        } else {
+        } else
+        {
             storedItem = null;
         }
 
@@ -58,14 +63,17 @@ public class TileFakePlayer extends TileEntity implements ITickable {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
 
-        if (storedItem != null) {
+        if (storedItem != null)
+        {
             NBTTagCompound item = new NBTTagCompound();
 
             storedItem.writeToNBT(item);
             compound.setTag("item", item);
-        } else if (compound.hasKey("item")) {
+        } else if (compound.hasKey("item"))
+        {
             compound.removeTag("item");
         }
 
@@ -81,4 +89,5 @@ public class TileFakePlayer extends TileEntity implements ITickable {
     {
         return storedItem;
     }
+
 }

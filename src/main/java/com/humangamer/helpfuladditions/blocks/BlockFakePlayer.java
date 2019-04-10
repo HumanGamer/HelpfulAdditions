@@ -24,9 +24,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockFakePlayer extends BlockDirectional implements ITileEntityProvider {
+public class BlockFakePlayer extends BlockDirectional implements ITileEntityProvider
+{
 
-    public BlockFakePlayer(String name, Material material) {
+    public BlockFakePlayer(String name, Material material)
+    {
         super(material);
 
         this.setCreativeTab(CreativeTabs.DECORATIONS);
@@ -38,12 +40,14 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
         return new TileFakePlayer();
     }
 
     @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state)
+    {
         super.onBlockAdded(world, pos, state);
         setDefaultDirection(world, pos, state);
     }
@@ -52,19 +56,17 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
     {
         if (!world.isRemote)
         {
-            EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+            EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
             boolean flag = world.getBlockState(pos.north()).isFullBlock();
             boolean flag1 = world.getBlockState(pos.south()).isFullBlock();
 
             if (enumfacing == EnumFacing.NORTH && flag && !flag1)
             {
                 enumfacing = EnumFacing.SOUTH;
-            }
-            else if (enumfacing == EnumFacing.SOUTH && flag1 && !flag)
+            } else if (enumfacing == EnumFacing.SOUTH && flag1 && !flag)
             {
                 enumfacing = EnumFacing.NORTH;
-            }
-            else
+            } else
             {
                 boolean flag2 = world.getBlockState(pos.west()).isFullBlock();
                 boolean flag3 = world.getBlockState(pos.east()).isFullBlock();
@@ -72,8 +74,7 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
                 if (enumfacing == EnumFacing.WEST && flag2 && !flag3)
                 {
                     enumfacing = EnumFacing.EAST;
-                }
-                else if (enumfacing == EnumFacing.EAST && flag3 && !flag2)
+                } else if (enumfacing == EnumFacing.EAST && flag3 && !flag2)
                 {
                     enumfacing = EnumFacing.WEST;
                 }
@@ -84,12 +85,14 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
         world.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
 
         if (world.isRemote)
             return true;
@@ -99,7 +102,7 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof TileFakePlayer)
         {
-            TileFakePlayer tile = (TileFakePlayer)tileEntity;
+            TileFakePlayer tile = (TileFakePlayer) tileEntity;
 
             tile.setStoredItem(player.getHeldItem(hand).copy());
         }
@@ -109,10 +112,10 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
 
     public static IPosition getFacingPosition(IBlockSource coords)
     {
-        EnumFacing enumfacing = (EnumFacing)coords.getBlockState().getValue(FACING);
-        double d0 = coords.getX() + 0.7D * (double)enumfacing.getXOffset();
-        double d1 = coords.getY() + 0.7D * (double)enumfacing.getYOffset();
-        double d2 = coords.getZ() + 0.7D * (double)enumfacing.getZOffset();
+        EnumFacing enumfacing = (EnumFacing) coords.getBlockState().getValue(FACING);
+        double d0 = coords.getX() + 0.7D * (double) enumfacing.getXOffset();
+        double d1 = coords.getY() + 0.7D * (double) enumfacing.getYOffset();
+        double d2 = coords.getZ() + 0.7D * (double) enumfacing.getZOffset();
         return new PositionImpl(d0, d1, d2);
     }
 
@@ -125,7 +128,7 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
-        i = i | ((EnumFacing)state.getValue(FACING)).getIndex();
+        i = i | ((EnumFacing) state.getValue(FACING)).getIndex();
 
         return i;
     }
@@ -133,6 +136,7 @@ public class BlockFakePlayer extends BlockDirectional implements ITileEntityProv
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
+        return new BlockStateContainer(this, new IProperty[]{FACING});
     }
+
 }

@@ -7,51 +7,66 @@ import net.minecraft.item.ItemBlock;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class HARegistry {
+public final class HARegistry
+{
+
     private static List<BlockContainer> blocks = new ArrayList<BlockContainer>();
     private static List<Item> items = new ArrayList<Item>();
 
-    public static void registerBlock(BlockContainer blockContainer) {
+    public static void registerBlock(BlockContainer blockContainer)
+    {
         HARegistry.blocks.add(blockContainer);
     }
 
-    public static void registerBlock(Block block, ItemBlock item) {
+    public static void registerBlock(Block block, ItemBlock item)
+    {
         HARegistry.registerBlock(new BlockContainer(block, item));
     }
 
-    public static void registerBlock(Block block) {
+    public static void registerBlock(Block block)
+    {
         ItemBlock item = new ItemBlock(block);
         item.setRegistryName(item.getBlock().getRegistryName());
         HARegistry.registerBlock(new BlockContainer(block, item));
     }
 
-    public static void registerItem(Item item) {
+    public static void registerItem(Item item)
+    {
         HARegistry.items.add(item);
     }
 
-    public static List<BlockContainer> getBlockList() {
+    public static List<BlockContainer> getBlockList()
+    {
         return HARegistry.blocks;
     }
 
-    public static List<Item> getItemList() {
+    public static List<Item> getItemList()
+    {
         return HARegistry.items;
     }
 
-    public static class BlockContainer {
+    public static class BlockContainer
+    {
+
         private Block block;
         private ItemBlock item;
 
-        public BlockContainer(Block block, ItemBlock item) {
+        public BlockContainer(Block block, ItemBlock item)
+        {
             this.block = block;
             this.item = item;
         }
 
-        public Block getBlock() {
+        public Block getBlock()
+        {
             return this.block;
         }
 
-        public ItemBlock getItem() {
+        public ItemBlock getItem()
+        {
             return this.item;
         }
+
     }
+
 }

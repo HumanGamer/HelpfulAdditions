@@ -3,7 +3,8 @@ package com.humangamer.helpfuladditions.init;
 import com.humangamer.helpfuladditions.blocks.BlockFakePlayer;
 import net.minecraft.block.material.Material;
 
-public final class HABlocks {
+public final class HABlocks
+{
 
     public static BlockFakePlayer fakePlayer;
 
@@ -11,4 +12,5 @@ public final class HABlocks {
     {
         fakePlayer = new BlockFakePlayer("fake_player", Material.IRON);
     }
+
 }

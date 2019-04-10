@@ -8,7 +8,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
-public class HelpfulAdditions {
+public class HelpfulAdditions
+{
 
     @Mod.Instance
     public static HelpfulAdditions instance;

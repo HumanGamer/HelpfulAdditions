@@ -9,19 +9,23 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy extends CommonProxy
+{
 
     @Override
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event)
+    {
         super.init(event);
 
         this.registerItemModels();
     }
 
-    public void registerItemModels() {
+    public void registerItemModels()
+    {
         ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 
-        for (HARegistry.BlockContainer blockContainer : HARegistry.getBlockList()) {
+        for (HARegistry.BlockContainer blockContainer : HARegistry.getBlockList())
+        {
             Block block = blockContainer.getBlock();
             Item item = Item.getItemFromBlock(block);
 
@@ -30,10 +34,12 @@ public class ClientProxy extends CommonProxy {
             mesher.register(item, 0, model);
         }
 
-        for (Item item : HARegistry.getItemList()) {
+        for (Item item : HARegistry.getItemList())
+        {
             ModelResourceLocation model = new ModelResourceLocation(item.getRegistryName(), "inventory");
             ModelLoader.registerItemVariants(item, model);
             mesher.register(item, 0, model);
         }
     }
+
 }

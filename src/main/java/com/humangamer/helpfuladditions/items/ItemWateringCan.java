@@ -27,7 +27,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemWateringCan extends Item {
+public class ItemWateringCan extends Item
+{
 
     private int range;
     private int chance;
@@ -35,6 +36,7 @@ public class ItemWateringCan extends Item {
 
     public ItemWateringCan(String name, EnumRarity rarity, int range, int chance)
     {
+
         this.setMaxStackSize(1);
         this.setCreativeTab(CreativeTabs.TOOLS);
 
@@ -49,11 +51,13 @@ public class ItemWateringCan extends Item {
     }
 
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
+    {
+
         if (!isActive(stack) || !isSelected || world.getTotalWorldTime() % 4 != 0 || !(entity instanceof EntityPlayer))
             return;
 
-        EntityPlayer player = (EntityPlayer)entity;
+        EntityPlayer player = (EntityPlayer) entity;
         EnumFacing facing = player.getHorizontalFacing();
         BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ).add(facing.getXOffset(), facing.getYOffset(), facing.getZOffset());
         this.spawnWaterParticles(world, pos);
@@ -61,22 +65,29 @@ public class ItemWateringCan extends Item {
     }
 
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+
         return EnumAction.NONE;
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
+    public EnumRarity getRarity(ItemStack stack)
+    {
+
         return this.rarity;
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean hasEffect(ItemStack stack)
+    {
+
         return this.isActive(stack);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+    {
 
         if (!world.isRemote && player.isSneaking())
         {
@@ -88,7 +99,9 @@ public class ItemWateringCan extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+
         tooltip.add(isActive(stack) ? ChatFormatting.GREEN + "Active" + ChatFormatting.RESET : ChatFormatting.RED + "Inactive" + ChatFormatting.RESET);
         int rangeDisplay = (range + 2);
         tooltip.add("Range: " + rangeDisplay + "x" + rangeDisplay);
@@ -97,21 +110,24 @@ public class ItemWateringCan extends Item {
 
     private boolean isActive(ItemStack stack)
     {
+
         NBTTagCompound compound = stack.getOrCreateSubCompound("watering_can");
         return compound.getBoolean("active");
     }
 
     private void setActive(ItemStack stack, boolean active)
     {
+
         NBTTagCompound compound = stack.getOrCreateSubCompound("watering_can");
         compound.setBoolean("active", active);
     }
 
     private void spawnWaterParticles(World world, BlockPos pos)
     {
+
         for (int i = -range; i <= range; i++)
         {
-            for (int j = -range; j<= range; j++)
+            for (int j = -range; j <= range; j++)
             {
                 double d0 = pos.add(i, 0, j).getX() + itemRand.nextFloat();
                 double d1 = pos.add(i, 0, j).getY() + 1.0D;
@@ -128,6 +144,7 @@ public class ItemWateringCan extends Item {
 
     private void waterCrops(World world, BlockPos pos)
     {
+
         if (world.isRemote || chance < itemRand.nextInt(100) + 1)
             return;
 
@@ -154,4 +171,5 @@ public class ItemWateringCan extends Item {
             }
         }
     }
+
 }
