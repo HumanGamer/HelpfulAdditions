@@ -8,6 +8,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 
 import javax.annotation.Nullable;
@@ -32,6 +33,8 @@ public class TileFakePlayer extends TileEntity implements ITickable
         }
     }
 
+    boolean direction = false;
+
     @Override
     public void update()
     {
@@ -43,6 +46,23 @@ public class TileFakePlayer extends TileEntity implements ITickable
             player = new EntityFakePlayer((WorldServer) world);
             player.setPosition(pos.getX(), pos.getY(), pos.getZ());
         }
+
+        /*yaw += 10;
+        if (yaw > 360)
+            yaw -= 360;
+
+        if (direction)
+        {
+            pitch += 10;
+            if (pitch > 90)
+                direction = false;
+        } else {
+            pitch -= 10;
+            if (pitch < -90)
+                direction = true;
+        }*/
+
+        updateState();
 
         player.rotationYaw = yaw;
         player.rotationPitch = pitch;
