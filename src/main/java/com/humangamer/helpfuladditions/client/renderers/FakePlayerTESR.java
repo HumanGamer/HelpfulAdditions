@@ -33,8 +33,8 @@ public class FakePlayerTESR extends TileEntitySpecialRenderer<TileFakePlayer>
         GlStateManager.disableRescaleNormal();
 
         GlStateManager.translate(0.5D, 0.5D, 0.5D);
-        GlStateManager.rotate(te.getPitch(), 1.0f, 0.0f, 0.0f);
         GlStateManager.rotate(te.getYaw(), 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(te.getPitch(), 1.0f, 0.0f, 0.0f);
         GlStateManager.translate(-0.25D, -0.25D, -0.25D);
         renderHead();
 

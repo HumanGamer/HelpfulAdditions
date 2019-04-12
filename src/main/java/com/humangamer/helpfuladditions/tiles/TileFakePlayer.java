@@ -47,18 +47,22 @@ public class TileFakePlayer extends TileEntity implements ITickable
             player.setPosition(pos.getX(), pos.getY(), pos.getZ());
         }
 
-        /*yaw += 10;
+        /*int yawIncr = 3;
+
+        yaw += yawIncr;
         if (yaw > 360)
             yaw -= 360;
 
+        int pitchIncr = 10;
+
         if (direction)
         {
-            pitch += 10;
-            if (pitch > 90)
+            pitch += pitchIncr;
+            if (pitch > 45)
                 direction = false;
         } else {
-            pitch -= 10;
-            if (pitch < -90)
+            pitch -= pitchIncr;
+            if (pitch < -45)
                 direction = true;
         }*/
 
